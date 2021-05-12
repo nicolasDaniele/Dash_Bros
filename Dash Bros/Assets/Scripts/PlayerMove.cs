@@ -10,6 +10,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]
     private float jumpForce = 200f;
     private bool isGrounded;
+    private bool isWalking = false;
     private Rigidbody2D rb2d;
     private Animator anim;
 
@@ -22,35 +23,38 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
+        // Horizontal move
+        horizMove = Input.GetAxis("Horizontal") * horizSpeed * Time.deltaTime;
+        rb2d.velocity = new Vector2(horizMove, rb2d.velocity.y);
+        // Walk animation
+        anim.SetBool("isWalking", isWalking);
+
         // Flip avatar
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow))
         {
             transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
+            isWalking = true;
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        else if (Input.GetKey(KeyCode.RightArrow))
         {
             transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
+            isWalking = true;
+        }
+
+        else if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
+        {
+            isWalking = false;
+        }
+
+
+        // Jump
+        if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
+        {
+            rb2d.velocity = Vector2.up * jumpForce;
         }
 
         // Jump animation
         anim.SetBool("isJumping", !isGrounded);
-    }
-
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        horizMove = Input.GetAxis("Horizontal") * horizSpeed * Time.deltaTime;
-        rb2d.velocity = new Vector2(horizMove, rb2d.velocity.y);
-        // Walk animation
-        anim.SetFloat("walking", Mathf.Abs(horizMove));
-
-        // Horizontal move
-        if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
-        {
-            rb2d.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-        }
-
-
     }
 
     // Ground check

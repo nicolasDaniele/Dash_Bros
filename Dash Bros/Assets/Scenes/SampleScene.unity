@@ -172,7 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49c78f27ca13bd3449ec01719ad96d58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  horizSpeed: 300
+  horizSpeed: 800
   jumpForce: 8
 --- !u!50 &360588528
 Rigidbody2D:
@@ -315,8 +315,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 131ef20e3fe404b4cac8e6d8a3c5865e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashSpeed: 10000
-  startDashTime: 0.2
+  dashSpeed: 25
+  startDashTime: 0.3
 --- !u!1 &364462360
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,8 +328,8 @@ GameObject:
   - component: {fileID: 364462362}
   - component: {fileID: 364462361}
   m_Layer: 0
-  m_Name: LeftTrigger
-  m_TagString: Trigger
+  m_Name: LeftWrapper
+  m_TagString: Wrapper
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -385,8 +385,8 @@ GameObject:
   - component: {fileID: 369161491}
   - component: {fileID: 369161490}
   m_Layer: 0
-  m_Name: RightTrigger
-  m_TagString: Trigger
+  m_Name: RightWrapper
+  m_TagString: Wrapper
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
