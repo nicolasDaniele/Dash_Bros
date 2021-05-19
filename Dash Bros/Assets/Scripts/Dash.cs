@@ -10,10 +10,11 @@ public class Dash : MonoBehaviour
     private float startDashTime = 0.2f;
     private float dashTime;
     private int direction;
-    private bool isDashing = false;
+    public bool isDashing = false;
 
     private Rigidbody2D rb2d;
     private Animator anim;
+
 
     // Start is called before the first frame update
     void Start()
@@ -29,12 +30,12 @@ public class Dash : MonoBehaviour
     {
         if (direction == 0)
         {
-            if (Input.GetKeyDown(KeyCode.X))
+            if (Input.GetKeyDown(KeyCode.Space) && transform.localScale.x < 0)
             {
                 direction = 1;
                 isDashing = true;
             }
-            else if (Input.GetKeyDown(KeyCode.C))
+            else if (Input.GetKeyDown(KeyCode.Space) && transform.localScale.x > 0)
             {
                 direction = 2;
                 isDashing = true;

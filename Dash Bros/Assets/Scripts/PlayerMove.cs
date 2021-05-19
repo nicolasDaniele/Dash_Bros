@@ -14,6 +14,8 @@ public class PlayerMove : MonoBehaviour
     private Rigidbody2D rb2d;
     private Animator anim;
 
+    public GameObject game;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,38 +25,41 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
-        // Horizontal move
-        horizMove = Input.GetAxis("Horizontal") * horizSpeed * Time.deltaTime;
-        rb2d.velocity = new Vector2(horizMove, rb2d.velocity.y);
-        // Walk animation
-        anim.SetBool("isWalking", isWalking);
-
-        // Flip avatar
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (game.GetComponent<GameController>().gs == GameController.GameStates.PLAY)
         {
-            transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
-            isWalking = true;
-        }
-        else if (Input.GetKey(KeyCode.RightArrow))
-        {
-            transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
-            isWalking = true;
-        }
+            // Horizontal move
+            horizMove = Input.GetAxis("Horizontal") * horizSpeed * Time.deltaTime;
+            rb2d.velocity = new Vector2(horizMove, rb2d.velocity.y);
+            // Walk animation
+            anim.SetBool("isWalking", isWalking);
 
-        else if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
-        {
-            isWalking = false;
+            // Flip avatar & set walk animation true or false
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
+                isWalking = true;
+            }
+            else if (Input.GetKey(KeyCode.RightArrow))
+            {
+                transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
+                isWalking = true;
+            }
+
+            else if (horizMove == 0)
+            {
+                isWalking = false;
+            }
+
+
+            // Jump
+            if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
+            {
+                rb2d.velocity = Vector2.up * jumpForce;
+            }
+
+            // Jump animation
+            anim.SetBool("isJumping", !isGrounded);
         }
-
-
-        // Jump
-        if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
-        {
-            rb2d.velocity = Vector2.up * jumpForce;
-        }
-
-        // Jump animation
-        anim.SetBool("isJumping", !isGrounded);
     }
 
     // Ground check
