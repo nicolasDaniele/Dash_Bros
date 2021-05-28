@@ -13,6 +13,7 @@ public class PlayerCollisions : MonoBehaviour
     private Animator anim;
 
     public GameObject game;
+    public GameObject collected;
 
     // Start is called before the first frame update
     void Start()
@@ -32,8 +33,16 @@ public class PlayerCollisions : MonoBehaviour
             }
             else
             {
+
                 Die();
             }
+        }
+
+        if (collision.gameObject.CompareTag("Item"))
+        {
+            Vector3 collectedPos = collision.gameObject.transform.position;
+            Destroy(collision.gameObject);
+            Instantiate(collected, collectedPos, Quaternion.identity);
         }
     }
 

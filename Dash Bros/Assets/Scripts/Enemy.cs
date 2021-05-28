@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour
     private Animator parentAnim;
 
     public GameObject parent;
+    public GameObject bananas;
     public GameObject game;
 
     // Start is called before the first frame update
@@ -68,8 +69,9 @@ public class Enemy : MonoBehaviour
 
     public void Die()
     {
-        Debug.Log("Enemy died!");
+        Vector3 bananasPos = transform.position + (new Vector3(0, 1, 0));
         parentAnim.SetTrigger("die");
+        Instantiate(bananas, bananasPos, Quaternion.identity);
         Destroy(gameObject, 0.5f);
     }
 }
