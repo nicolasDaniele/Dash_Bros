@@ -9,8 +9,8 @@ public class PlayerMove : MonoBehaviour
     private float horizSpeed = 300f; // For horizontal speed
     [SerializeField]
     private float jumpForce = 200f;
-    private bool isGrounded;
     private bool isWalking = false;
+    private bool jump = false;
     private Rigidbody2D rb2d;
     private Animator anim;
 
@@ -23,16 +23,21 @@ public class PlayerMove : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
+    private void FixedUpdate()
+    {
+        // Horizontal move
+        horizMove = Input.GetAxis("Horizontal") * horizSpeed * Time.deltaTime;
+        rb2d.velocity = new Vector2(horizMove, rb2d.velocity.y);
+
+        Jump();
+       
+        
+    }
+
     private void Update()
     {
         if (game.GetComponent<GameController>().gs == GameController.GameStates.PLAY)
         {
-            // Horizontal move
-            horizMove = Input.GetAxis("Horizontal") * horizSpeed * Time.deltaTime;
-            rb2d.velocity = new Vector2(horizMove, rb2d.velocity.y);
-            // Walk animation
-            anim.SetBool("isWalking", isWalking);
-
             // Flip avatar & set walk animation true or false
             if (Input.GetKey(KeyCode.LeftArrow))
             {
@@ -50,31 +55,27 @@ public class PlayerMove : MonoBehaviour
                 isWalking = false;
             }
 
-
+            
             // Jump
-            if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
-            {
-                rb2d.velocity = Vector2.up * jumpForce;
-            }
+            if (Input.GetKeyDown(KeyCode.UpArrow) && GroundCheck.isGrounded)
+                jump = true;
 
             // Jump animation
-            anim.SetBool("isJumping", !isGrounded);
+            anim.SetBool("isJumping", !GroundCheck.isGrounded);
+            // Walk animation
+            anim.SetBool("isWalking", isWalking);
         }
     }
 
-    // Ground check
-    private void OnCollisionStay2D(Collision2D collision)
+    
+
+    void Jump()
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (jump)
         {
-            isGrounded = true;
+            rb2d.velocity = Vector2.up * jumpForce;
+            jump = false;
         }
-    }
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = false;
-        }
+            
     }
 }

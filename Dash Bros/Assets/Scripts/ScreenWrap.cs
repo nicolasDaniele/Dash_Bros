@@ -4,6 +4,31 @@ using UnityEngine;
 
 public class ScreenWrap : MonoBehaviour
 {
+    public GameObject leftWrapper;
+    public GameObject rightWrapper;
+ 
+    float minX;
+    float maxX;
+
+    BoxCollider2D bc2d;
+
+    private void Start()
+    {
+        bc2d = GetComponentInChildren<BoxCollider2D>();
+        minX = leftWrapper.transform.position.x + 2f;
+        maxX = rightWrapper.transform.position.x - 2f;
+    }
+    private void Update()
+    {
+        if (transform.position.x <= minX || transform.position.x >= maxX)
+        {
+            bc2d.enabled = false;
+        }
+        else
+        {
+            bc2d.enabled = true;
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
