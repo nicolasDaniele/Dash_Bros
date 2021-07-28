@@ -1535,3 +1535,27 @@ Received Import Request.
 Start importing Assets/Scenes/Level1 1.unity using Guid(1dc36dd99346e1543ad7219b09d4e5a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f9e34c1d02be07c01cf8c2789adb6c3c') in 0.025508 seconds
   Import took 0.030214 seconds .
 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002489 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.65 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.223 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 1.02 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1946 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 93.3 MB.
+System memory in use after: 93.1 MB.
+
+Unloading 25 unused Assets to reduce memory usage. Loaded Objects now: 2578.
+Total: 3.464300 ms (FindLiveObjects: 0.329500 ms CreateObjectMapping: 0.202200 ms MarkObjects: 2.635400 ms  DeleteObjects: 0.295400 ms)
+
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
