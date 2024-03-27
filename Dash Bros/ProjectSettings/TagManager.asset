@@ -10,6 +10,7 @@ TagManager:
   - Item
   - Prize
   - Falling
+  - Pit
   layers:
   - Default
   - TransparentFX

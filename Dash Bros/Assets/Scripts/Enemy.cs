@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,8 +18,7 @@ public class Enemy : MonoBehaviour
     private Animator parentAnim;
 
     public GameObject parent;
-    public GameObject bananas;
-    public GameObject game;
+    public GameObject itemToSpawn;
 
     // Start is called before the first frame update
     void Start()
@@ -30,16 +30,13 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // This is kind of an offset in x axis so that the enemy doesn't reach
-        // the same value in x as the player,
-        // Otherwise he goes like berzerk
         if (player != null)
         {
             minMarginX = player.transform.position.x - XoffSet;
             maxMarginX = player.transform.position.x + XoffSet;
         }
         
-        if (game.GetComponent<GameController>().gs == GameController.GameStates.PLAY)
+        if (GameController.instance.GetComponent<GameController>().gameState == GameController.GameStates.PLAY)
         {
             // Enemy hunts the player
             if (transform.position.x < maxMarginX)
@@ -71,8 +68,7 @@ public class Enemy : MonoBehaviour
     {
         Vector3 bananasPos = transform.position + (new Vector3(0, 1, 0));
         parentAnim.SetTrigger("die");
-        Instantiate(bananas, bananasPos, Quaternion.identity);
+        Instantiate(itemToSpawn, bananasPos, Quaternion.identity);
         Destroy(gameObject, 0.5f);
     }
 }
-

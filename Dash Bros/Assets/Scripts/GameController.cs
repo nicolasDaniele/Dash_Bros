@@ -1,41 +1,60 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization.Formatters;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-    public GameObject panelWin;
-    public GameObject panelPause;
+    [SerializeField] private GameObject panelWin;
+    [SerializeField] private GameObject panelPause;
 
     public enum GameStates {PLAY, END, WIN, PAUSE, TRANSITION};
-    public GameStates gs;
+    public GameStates gameState;
+
+    public static GameController instance { get; private set; }
+
+    private void Awake() 
+    {    
+        if (instance != null && instance != this) 
+        { 
+            Destroy(this); 
+        } 
+        else 
+        { 
+            instance = this; 
+        } 
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         panelWin.SetActive(false);
         panelPause.SetActive(false);
-        gs = GameStates.PLAY;
+        gameState = GameStates.PLAY;
+    }
+
+    private void OnEnable() 
+    {
+        PlayerCollisions.onPlayerDestroyed += ReturnToTitleScreen;    
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (gs == GameStates.WIN)
+        if (gameState == GameStates.WIN)
         {
             panelWin.SetActive(true);
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (gs == GameStates.PAUSE)
-                gs = GameStates.PLAY;
+            if (gameState == GameStates.PAUSE)
+                gameState = GameStates.PLAY;
             else
-                gs = GameStates.PAUSE;
+                gameState = GameStates.PAUSE;
         }
 
-        if (gs == GameStates.PAUSE)
+        if (gameState == GameStates.PAUSE)
         {
             Time.timeScale = 0;
             panelPause.SetActive(true);
@@ -45,6 +64,11 @@ public class GameController : MonoBehaviour
             Time.timeScale = 1;
             panelPause.SetActive(false);
         }
+    }
+
+    void ReturnToTitleScreen()
+    {
+        SceneManager.LoadScene("TitleScene");
     }
 
     public void ExitGame()
